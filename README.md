@@ -6,12 +6,12 @@
 # Roadmap:
 
 - [X] Projekt aufsetzen und Github Repository erstellen
-- [ ] Das GUI bauen mit JavaFX
+- [ ] Das Grundlegende GUI bauen mit JavaFX
 - [ ] Verschlüsselungslogik schreiben
 - [ ] Rekursives durchsuchen der Ordner implementieren
 - [ ] Logik in das GUI einbinden
 - [ ] Später: Evtl Fortschrittanzeige für große Ordnerstrukturen einbauen
-- [ ] Später: Option zum sicheren Löschen und Widerherstellen des Originalordners
+- [ ] Später: Option zum sicheren Löschen des Originalordners
 
 # Wichtige genutzte Bibliotheken: 
 
