@@ -6,7 +6,7 @@
 # Roadmap:
 
 - [X] Projekt aufsetzen und Github Repository erstellen
-- [ ] Das Grundlegende GUI bauen mit JavaFX
+- [X] Das Grundlegende GUI bauen mit JavaFX
 - [ ] Verschlüsselungslogik schreiben
 - [ ] Rekursives durchsuchen der Ordner implementieren
 - [ ] Logik in das GUI einbinden

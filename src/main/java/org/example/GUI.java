@@ -41,12 +41,19 @@ public class GUI extends Application {
         Mitte.setAlignment(Pos.CENTER);
 
         Button OrdnerAuswahl = new Button("Ordner-Auswahl");
-        Label Fortschrit = new Label("..%");
+        Label Fortschrit = new Label("..% (In Arbeit)");
         Button OrdnerAusgabe = new Button("Ordner-Ausgabe");
         OrdnerAusgabe.setPrefSize(120, 30);
         OrdnerAuswahl.setPrefSize(120, 30);
         Fortschrit.setStyle("-fx-font-size: 20");
-        Mitte.getChildren().addAll(OrdnerAuswahl, Fortschrit, OrdnerAusgabe);
+
+        VBox Zentrum = new VBox(10);
+        Zentrum.setAlignment(Pos.CENTER);
+        Label aktOrdner = new Label("Aktueller Ordner: ... ");
+
+        Zentrum.getChildren().addAll(Fortschrit, aktOrdner);
+
+        Mitte.getChildren().addAll(OrdnerAuswahl, Zentrum, OrdnerAusgabe);
         root.setCenter(Mitte);
 
         //Auswählen des Ordners implementieren
@@ -54,6 +61,11 @@ public class GUI extends Application {
                     javafx.stage.DirectoryChooser directoryChooser = new javafx.stage.DirectoryChooser();
                     directoryChooser.setTitle("Wähle einen Ordner zum Verschlüsseln aus!");
                     File selectedDirectory = directoryChooser.showDialog(primaryStage);
+
+                    //ZUm Anzeigen des Ordnernamens
+                    if (selectedDirectory != null) {
+                        aktOrdner.setText("Aktueller Ordner: " +  selectedDirectory.getName());
+                    }
                 });
 
 
@@ -61,8 +73,8 @@ public class GUI extends Application {
         HBox Unten = new HBox(100);
         Unten.setAlignment(Pos.BOTTOM_CENTER);
 
-        Button Verschluesseln = new Button("Verschluessel");
-        Button Entschluesseln = new Button("Entschluessel");
+        Button Verschluesseln = new Button("Verschlüsseln");
+        Button Entschluesseln = new Button("Entschlüsseln");
         Verschluesseln.setPrefSize(120, 30);
         Entschluesseln.setPrefSize(120, 30);
         Unten.getChildren().addAll(Verschluesseln, Entschluesseln);
