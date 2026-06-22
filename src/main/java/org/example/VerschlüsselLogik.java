@@ -16,22 +16,12 @@ import javax.crypto.CipherInputStream;
 
 public class VerschlüsselLogik {
 
-    Key key;
-    //Try Catch um den in ZufälligerSchlüssel generierten SChlüssel hier aufrufen zu können.
-    {
-        try {
-            key = ZufälligerSchlüssel.getKeyFromKeyGenerator();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidKeySpecException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    public void FileVerschlüsseln(File file, String passwort) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
 
-    public void Verschlüsseln(File file, String passwort) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+        Key aktuellerKey = ZufälligerSchlüssel.TextzuKey(passwort);
 
         Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, key);
+        cipher.init(Cipher.ENCRYPT_MODE, aktuellerKey);
 
         try (FileInputStream fis = new FileInputStream(file); //InputStream
              FileOutputStream fos = new FileOutputStream(file.getAbsolutePath() + ".enc"); //OutputStream
@@ -47,10 +37,12 @@ public class VerschlüsselLogik {
             e.printStackTrace();
         }
     }
-    public void Entschlüsseln(File verschlüsselteFile, String passwort) throws InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException {
+    public void FileEntschlüsseln(File verschlüsselteFile, String passwort) throws InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException {
+
+        Key aktuellerKey = ZufälligerSchlüssel.TextzuKey(passwort);
 
         Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.DECRYPT_MODE, key);
+        cipher.init(Cipher.DECRYPT_MODE, aktuellerKey);
 
         try (FileInputStream fis = new FileInputStream(verschlüsselteFile.getAbsolutePath());
              FileOutputStream fos = new FileOutputStream(verschlüsselteFile.getAbsolutePath() + ".decrypted");
@@ -64,5 +56,33 @@ public class VerschlüsselLogik {
             e.printStackTrace();
         }
 
+    }
+
+    public void OrdnerVerschlüsseln(File ordner, String passwort) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+        if (ordner.isDirectory()){
+            File[] dateien = ordner.listFiles();
+
+            if (dateien != null){
+
+                for (File file : dateien){
+
+                    FileVerschlüsseln(file , passwort);
+
+                }
+            }
+        }
+    }
+
+    public void OrdnerEntschlüsseln(File ordner, String passwort) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+        if (ordner.isDirectory()){
+            File[] dateien = ordner.listFiles();
+
+            if (dateien != null){
+
+                for (File file : dateien){
+                    FileEntschlüsseln(file , passwort);
+                }
+            }
+        }
     }
 }

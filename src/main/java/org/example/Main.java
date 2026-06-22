@@ -22,9 +22,9 @@ public class Main {
             File original = new File("test.txt");
             File verschlüssselt = new File ("test.txt.enc");
 
-            logik.Verschlüsseln(original, "");
+            logik.FileVerschlüsseln(original, "");
 
-            logik.Entschlüsseln(verschlüssselt, "");
+            logik.FileEntschlüsseln(verschlüssselt, "");
 
             System.out.println(" Test erfolgreich");
         } catch ( Exception e){

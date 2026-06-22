@@ -7,7 +7,7 @@
 
 - [X] Projekt aufsetzen und Github Repository erstellen
 - [X] Das Grundlegende GUI bauen mit JavaFX
-- [ ] Verschlüsselungslogik schreiben
+- [X] Verschlüsselungslogik schreiben
 - [ ] Rekursives durchsuchen der Ordner implementieren
 - [ ] Logik in das GUI einbinden
 - [ ] Später: Evtl Fortschrittanzeige für große Ordnerstrukturen einbauen
