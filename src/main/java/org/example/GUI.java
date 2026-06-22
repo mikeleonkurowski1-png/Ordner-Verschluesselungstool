@@ -3,6 +3,7 @@ package org.example;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -11,6 +12,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.File;
+import org.example.*;
 
 
 // Eigene Datei, die nur dem Erstellen des GUI dient
@@ -24,6 +26,9 @@ public class GUI extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+        final File[] ausgewählterOrdner = new File[1];
+        final String[] generierterKeySicherer = new String[1];
 
         BorderPane root = new BorderPane();
         root.setPadding(new javafx.geometry.Insets(20));
@@ -41,7 +46,7 @@ public class GUI extends Application {
         Mitte.setAlignment(Pos.CENTER);
 
         Button OrdnerAuswahl = new Button("Ordner-Auswahl");
-        Label Fortschrit = new Label("..% (In Arbeit)");
+        Label Fortschrit = new Label("..%");
         Button OrdnerAusgabe = new Button("Herunterladen");
         OrdnerAusgabe.setPrefSize(140, 35);
         OrdnerAuswahl.setPrefSize(140, 35);
@@ -65,6 +70,7 @@ public class GUI extends Application {
                     //ZUm Anzeigen des Ordnernamens
                     if (selectedDirectory != null) {
                         aktOrdner.setText("Aktueller Ordner: " +  selectedDirectory.getName());
+                        ausgewählterOrdner[0] = selectedDirectory;
                     }
                 });
 
@@ -79,6 +85,41 @@ public class GUI extends Application {
         Entschluesseln.setPrefSize(120, 30);
         Unten.getChildren().addAll(Verschluesseln, Entschluesseln);
         root.setBottom(Unten);
+
+        //Action des Verschlüsseln-Buttons implementieren
+        Verschluesseln.setOnAction(event -> {
+            if (ausgewählterOrdner[0] == null){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Achtung");
+                alert.setContentText("Wähle zuerst einen Ordner aus!");
+                alert.showAndWait();
+                return;
+
+            } else if (ausgewählterOrdner[0] != null) {
+                try {
+                    String key = ZufälligerSchlüssel.getKeyFromKeyGenerator();
+                    generierterKeySicherer[0] = key;
+
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Erfolg!");
+                    alert.setHeaderText("Ordner wurde erfolgreich verschlüsselt!");
+
+                    javafx.scene.control.TextArea textArea = new javafx.scene.control.TextArea("Hier der Key zum Entschlüsseln: " + key);
+                    textArea.setEditable(false);
+                    textArea.setWrapText(true);
+
+                    alert.getDialogPane().setContent(textArea);
+                    alert.showAndWait();
+
+                    Fortschrit.setText("Fertig!");
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
 
 
         Scene scene = new Scene(root, 600, 300);
