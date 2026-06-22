@@ -66,8 +66,13 @@ public class VerschlüsselLogik {
 
                 for (File file : dateien){
 
-                    FileVerschlüsseln(file , passwort);
+                    if (file.isDirectory()){
+                        OrdnerVerschlüsseln(file, passwort); //Rekursiver Aufruf, falls ein Unterordner existiert
+                    } else {
 
+                        FileVerschlüsseln(file, passwort);
+
+                    }
                 }
             }
         }
@@ -80,7 +85,12 @@ public class VerschlüsselLogik {
             if (dateien != null){
 
                 for (File file : dateien){
-                    FileEntschlüsseln(file , passwort);
+
+                    if (file.isDirectory()){
+                        OrdnerEntschlüsseln(file, passwort);
+                    } else {
+                        FileEntschlüsseln(file, passwort);
+                    }
                 }
             }
         }

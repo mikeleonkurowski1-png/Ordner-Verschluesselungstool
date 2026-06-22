@@ -42,9 +42,9 @@ public class GUI extends Application {
 
         Button OrdnerAuswahl = new Button("Ordner-Auswahl");
         Label Fortschrit = new Label("..% (In Arbeit)");
-        Button OrdnerAusgabe = new Button("Ordner-Ausgabe");
-        OrdnerAusgabe.setPrefSize(120, 30);
-        OrdnerAuswahl.setPrefSize(120, 30);
+        Button OrdnerAusgabe = new Button("Herunterladen");
+        OrdnerAusgabe.setPrefSize(140, 35);
+        OrdnerAuswahl.setPrefSize(140, 35);
         Fortschrit.setStyle("-fx-font-size: 20");
 
         VBox Zentrum = new VBox(10);
