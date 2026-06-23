@@ -148,7 +148,7 @@ public class GUI extends Application {
 
         //Action des Verschlüsseln-Buttons implementieren
         Verschluesseln.setOnAction(event -> {
-            if (ausgewählterOrdner[0] == null || !(ausgewählterOrdner[0].getName().endsWith(".dec"))) {
+            if (ausgewählterOrdner[0] == null || (ausgewählterOrdner[0].getName().endsWith(".enc"))) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Achtung");
                 alert.setContentText("Wähle zuerst einen noch nicht verschlüsselten Ordner aus!");
@@ -211,7 +211,7 @@ public class GUI extends Application {
         root.setStyle("-fx-background-color: #2b2b2b;");
 
         Ueberschrift.setStyle("-fx-font-size: 20; -fx-text-fill: #B0C4DE;");
-        Fortschrit.setStyle("-fx-font-size: 20;  -fx-text-fill: #aßb9c6;");
+        Fortschrit.setStyle("-fx-font-size: 20;  -fx-text-fill: #B0C4DE;");
         aktOrdner.setStyle("-fx-text-fill: #a9b8c7");
 
         String buttonStyle = "-fx-background-color: #B0C4DE; " +

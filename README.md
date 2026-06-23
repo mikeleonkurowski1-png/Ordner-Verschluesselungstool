@@ -24,3 +24,8 @@
 - GUI-Design mit CSS (Experimentell): Erster Einsatz eines kleinen CSS Codeabschnittes, um dem GUI-Design moderne Farben zu verleihen
 
 
+## Vorschau: 
+
+![Ordner verschlüsseln](Demo/Vorschau1.gif)
+
+![Ordner entschlüsseln](Demo/Vorschau2.gif)
