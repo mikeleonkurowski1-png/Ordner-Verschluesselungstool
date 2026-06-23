@@ -3,15 +3,14 @@ package org.example;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.File;
+import java.util.Optional;
+
 import org.example.*;
 
 
@@ -29,6 +28,7 @@ public class GUI extends Application {
 
         final File[] ausgewählterOrdner = new File[1];
         final String[] generierterKeySicherer = new String[1];
+        final String[] Modus = new  String[1];
 
         BorderPane root = new BorderPane();
         root.setPadding(new javafx.geometry.Insets(20));
@@ -46,7 +46,7 @@ public class GUI extends Application {
         Mitte.setAlignment(Pos.CENTER);
 
         Button OrdnerAuswahl = new Button("Ordner-Auswahl");
-        Label Fortschrit = new Label("..%");
+        Label Fortschrit = new Label("");
         Button OrdnerAusgabe = new Button("Herunterladen");
         OrdnerAusgabe.setPrefSize(140, 35);
         OrdnerAuswahl.setPrefSize(140, 35);
@@ -88,23 +88,49 @@ public class GUI extends Application {
             directoryChooser.setTitle("Wähle einen Speicherort aus.");
             File speicherziel =  directoryChooser.showDialog(primaryStage);
 
-            if (speicherziel != null) {
-                try {
-                    File VerschlüsselterOrdner = new File(speicherziel, ausgewählterOrdner[0].getName() + ".enc");
+            if ("Verschlüsseln".equals(Modus[0])) {
 
-                    VerschlüsselLogik logik = new VerschlüsselLogik();
-                    logik.OrdnerVerschlüsseln(ausgewählterOrdner[0], VerschlüsselterOrdner, generierterKeySicherer[0]);
+                if (speicherziel != null) {
+                    try {
+                        File VerschlüsselterOrdner = new File(speicherziel, ausgewählterOrdner[0].getName() + ".enc");
 
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Herunterladen erfolgreich!");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Der Verschlüsselte Ordner wurde erfolgreich heruntergeladen unter; " + VerschlüsselterOrdner.getPath());
-                    alert.showAndWait();
-                    return;
+                        VerschlüsselLogik logik = new VerschlüsselLogik();
+                        logik.OrdnerVerschlüsseln(ausgewählterOrdner[0], VerschlüsselterOrdner, generierterKeySicherer[0]);
 
-                } catch (Exception e){
-                    e.printStackTrace();
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Herunterladen erfolgreich!");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Der Verschlüsselte Ordner wurde erfolgreich heruntergeladen unter; " + VerschlüsselterOrdner.getPath());
+                        alert.showAndWait();
+                        return;
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
+            } else if ("Entschlüsseln".equals(Modus[0])) {
+
+                if (speicherziel != null) {
+                    try {
+                        String name = ausgewählterOrdner[0].getName();
+                        name = name.substring(0, name.length() - 4);
+                        File EntschlüsselterOrdner = new File(speicherziel, name + ".dec");
+
+                        VerschlüsselLogik logik = new VerschlüsselLogik();
+                        logik.OrdnerEntschlüsseln(ausgewählterOrdner[0], EntschlüsselterOrdner, generierterKeySicherer[0]);
+
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Herunterladen erfolgreich!");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Der Entschlüsselte Ordner wurde erfolgreich heruntergeladen unter; " + EntschlüsselterOrdner.getPath());
+                        alert.showAndWait();
+                        return;
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
             }
         });
 
@@ -146,10 +172,33 @@ public class GUI extends Application {
                     alert.showAndWait();
 
                     Fortschrit.setText("Fertig!");
+                    Modus[0] = "Verschlüsseln";
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
+            }
+        });
+
+        Entschluesseln.setOnAction(event -> {
+            if (ausgewählterOrdner[0] == null || !(ausgewählterOrdner[0].getName().endsWith(".enc"))) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Achtung");
+                alert.setContentText("Wähle zuerst einen verschlüsselten Ordner aus! (.enc Endung)");
+                alert.showAndWait();
+                return;
+            }
+
+            TextInputDialog Eingabe = new TextInputDialog();
+            Eingabe.setTitle("Schlüsssel eingeben!");
+            Eingabe.setContentText("Bitte geben sie den Schlüssel ein: ");
+
+            Optional<String> eingabe = Eingabe.showAndWait();
+
+            if (eingabe.isPresent()) {
+                generierterKeySicherer[0] = eingabe.get();
+                Modus[0] = "Entschlüsseln";
 
             }
         });

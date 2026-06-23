@@ -1,18 +1,15 @@
 package org.example;
 
-import org.example.ZufälligerSchlüssel;
 import java.io.File;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import javax.crypto.CipherOutputStream;
-import javax.crypto.CipherInputStream;
 
 public class VerschlüsselLogik {
 
