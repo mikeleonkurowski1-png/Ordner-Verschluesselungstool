@@ -26,6 +26,10 @@
 
 ## Vorschau: 
 
+
+- Ordner verschlüsseln:
 ![Ordner verschlüsseln](Demo/Vorschau1.gif)
 
+  
+- Ordner entschlüsseln:
 ![Ordner entschlüsseln](Demo/Vorschau2.gif)
