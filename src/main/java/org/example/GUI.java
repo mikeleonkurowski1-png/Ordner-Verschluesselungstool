@@ -79,7 +79,7 @@ public class GUI extends Application {
             if (generierterKeySicherer[0] == null) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Achtung");
-                alert.setContentText("Bitte klicke zuerst auf Verschlüsseln um einen Schlüssel zu generieren!");
+                alert.setContentText("Bitte Verschlüssle oder Entschlüssle zuerst!");
                 alert.showAndWait();
                 return;
             }
@@ -148,10 +148,10 @@ public class GUI extends Application {
 
         //Action des Verschlüsseln-Buttons implementieren
         Verschluesseln.setOnAction(event -> {
-            if (ausgewählterOrdner[0] == null){
+            if (ausgewählterOrdner[0] == null || !(ausgewählterOrdner[0].getName().endsWith(".dec"))) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Achtung");
-                alert.setContentText("Wähle zuerst einen Ordner aus!");
+                alert.setContentText("Wähle zuerst einen noch nicht verschlüsselten Ordner aus!");
                 alert.showAndWait();
                 return;
 
@@ -206,6 +206,27 @@ public class GUI extends Application {
 
 
         Scene scene = new Scene(root, 600, 300);
+
+        //Verschönerung des GUI mit Hilfe von CSS. Aktuell nur absolute CSS Basics, die fast vollständig auf Recherche basieren, da ich davor noch nie mit CSS gearbeitet habe. Später evtl weitere Verschönerung des GUI möglich.
+        root.setStyle("-fx-background-color: #2b2b2b;");
+
+        Ueberschrift.setStyle("-fx-font-size: 20; -fx-text-fill: #B0C4DE;");
+        Fortschrit.setStyle("-fx-font-size: 20;  -fx-text-fill: #aßb9c6;");
+        aktOrdner.setStyle("-fx-text-fill: #a9b8c7");
+
+        String buttonStyle = "-fx-background-color: #B0C4DE; " +
+                "-fx-background-insets: 0; " +
+                "-fx-text-fill: #000000; " +
+                "-fx-border-color: #555555; " +
+                "-fx-border-width: 1; " +
+                "-fx-border-radius: 3; " +
+                "-fx-background-radius: 3;";
+        OrdnerAusgabe.setStyle(buttonStyle);
+        OrdnerAuswahl.setStyle(buttonStyle);
+        Verschluesseln.setStyle(buttonStyle);
+        Entschluesseln.setStyle(buttonStyle);
+
+
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();

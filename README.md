@@ -17,3 +17,10 @@
 - JavaFX: Für die grafische Oberfläche und die Ordnerauswahl
 - Java Cryptography Extension (JCE): Liefert unter anderem die "Cipher"-Klassen, mit denen  die eigentliche Verschlüsselung stattfindet
 - Java Standartbibliotheken (java.io, java.util, ...): Für das Lesen und Schreiben von Dateien und der Verarbeitung des Keys zu Text
+
+
+# Besonderheit: 
+
+- GUI-Design mit CSS (Experimentell): Erster Einsatz eines kleinen CSS Codeabschnittes, um dem GUI-Design moderne Farben zu verleihen
+
+
