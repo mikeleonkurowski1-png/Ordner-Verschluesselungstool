@@ -74,6 +74,40 @@ public class GUI extends Application {
                     }
                 });
 
+        OrdnerAusgabe.setOnAction(event -> {
+            //Check ob überhaupt bereits ein Key vorliegt (Ob überhaupt bereits Ver oder Entschlüsselt wurde
+            if (generierterKeySicherer[0] == null) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Achtung");
+                alert.setContentText("Bitte klicke zuerst auf Verschlüsseln um einen Schlüssel zu generieren!");
+                alert.showAndWait();
+                return;
+            }
+
+            javafx.stage.DirectoryChooser directoryChooser = new javafx.stage.DirectoryChooser();
+            directoryChooser.setTitle("Wähle einen Speicherort aus.");
+            File speicherziel =  directoryChooser.showDialog(primaryStage);
+
+            if (speicherziel != null) {
+                try {
+                    File VerschlüsselterOrdner = new File(speicherziel, ausgewählterOrdner[0].getName() + ".enc");
+
+                    VerschlüsselLogik logik = new VerschlüsselLogik();
+                    logik.OrdnerVerschlüsseln(ausgewählterOrdner[0], VerschlüsselterOrdner, generierterKeySicherer[0]);
+
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Herunterladen erfolgreich!");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Der Verschlüsselte Ordner wurde erfolgreich heruntergeladen unter; " + VerschlüsselterOrdner.getPath());
+                    alert.showAndWait();
+                    return;
+
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+
 
         //Unterer Teil
         HBox Unten = new HBox(100);
